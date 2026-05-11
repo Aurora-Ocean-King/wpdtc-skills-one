@@ -15,7 +15,7 @@ import {
 test("parseFrontmatter extracts YAML fields and strips wrapping quotes", () => {
   const input = `---
 title: "Hello World"
-author: ‘Baoyu’
+author: ‘WPDTC’
 summary: plain text
 ---
 # Heading
@@ -44,7 +44,7 @@ test("serializeFrontmatter renders YAML only when fields exist", () => {
   assert.equal(serializeFrontmatter({}), "");
   assert.equal(
     serializeFrontmatter({ title: "Hello", author: "WPDTC" }),
-    "---\ntitle: Hello\nauthor: Baoyu\n---\n",
+    "---\ntitle: Hello\nauthor: WPDTC\n---\n",
   );
 });
 

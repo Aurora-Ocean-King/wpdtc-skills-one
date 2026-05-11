@@ -46,7 +46,7 @@ Execute: `${BUN_X} skills/<skill>/scripts/main.ts [options]`
 | Rule | Description |
 |------|-------------|
 | **Load project skills first** | Project skills override system/user-level skills with same name |
-| **Default image generation** | Use whatever image backend is available in the current runtime; if multiple are available, ask the user which to use. See `## Image Generation Tools` below. |
+| **Default image generation** | Use whatever image backend is available in the current runtime; if multiple are available, ask the user which to use. |
 
 Priority: project `skills/` → `$HOME/.wpdtc-skills/` → system-level.
 
@@ -62,10 +62,6 @@ Each skill under `skills/` (and `.claude/skills/`) is distributed and consumed i
 
 Skills that prompt users for choices MUST declare the tool-selection convention **inline** in exactly one place per `SKILL.md` — a `## User Input Tools` section near the top. Do NOT link out to [docs/user-input-tools.md](docs/user-input-tools.md); that doc is the author-side canonical source — copy its body into each SKILL.md. Concrete `AskUserQuestion` mentions elsewhere in a skill are treated as examples — other runtimes substitute their local equivalent under the rule.
 
-## Image Generation Tools
-
-
-## Deprecated Skills
 ## Release Process
 
 Use `/release-skills` workflow. Never skip:
