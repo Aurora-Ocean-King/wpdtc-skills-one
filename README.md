@@ -623,7 +623,7 @@ AI-powered generation backends.
 
 #### wpdtc-imagine
 
-AI SDK-based image generation using OpenAI GPT Image 2, Azure OpenAI, Google, OpenRouter, DashScope (Aliyun Tongyi Wanxiang), MiniMax, Jimeng (即梦), Seedream (豆包), and Replicate APIs. Supports text-to-image, reference images, aspect ratios, custom sizes, batch generation, and quality presets.
+AI SDK-based image generation using OpenAI GPT Image 2, Azure OpenAI, Google, OpenRouter, DashScope (Aliyun Tongyi Wanxiang), Z.AI GLM-Image, MiniMax, Jimeng (即梦), Seedream (豆包), Evolink (async GPT Image 2), and Replicate APIs. Supports text-to-image, reference images, aspect ratios, custom sizes, batch generation, and quality presets.
 
 ```bash
 # Basic generation (auto-detect provider)
@@ -680,6 +680,12 @@ AI SDK-based image generation using OpenAI GPT Image 2, Azure OpenAI, Google, Op
 # With reference images (Google, OpenAI, Azure OpenAI, OpenRouter, Replicate, MiniMax, or Seedream 5.0/4.5/4.0)
 /wpdtc-imagine --prompt "Make it blue" --image out.png --ref source.png
 
+# Evolink (async GPT Image 2)
+/wpdtc-imagine --prompt "A cinematic poster" --image poster.png --provider evolink
+
+# Evolink with reference images (public HTTP/HTTPS URLs)
+/wpdtc-imagine --prompt "Enhance colors" --image enhanced.png --provider evolink --ref https://example.com/photo.jpg
+
 # Batch mode
 /wpdtc-imagine --batchfile batch.json --jobs 4 --json
 ```
@@ -692,14 +698,14 @@ AI SDK-based image generation using OpenAI GPT Image 2, Azure OpenAI, Google, Op
 | `--image` | Output image path (required) |
 | `--batchfile` | JSON batch file for multi-image generation |
 | `--jobs` | Worker count for batch mode |
-| `--provider` | `google`, `openai`, `azure`, `openrouter`, `dashscope`, `zai`, `minimax`, `jimeng`, `seedream`, or `replicate` |
+| `--provider` | `google`, `openai`, `azure`, `openrouter`, `dashscope`, `zai`, `minimax`, `jimeng`, `seedream`, `replicate`, or `evolink` |
 | `--model`, `-m` | Model ID or deployment name. Azure uses deployment name; OpenRouter uses full model IDs; Z.AI uses `glm-image`; MiniMax uses `image-01` / `image-01-live` |
 | `--ar` | Aspect ratio (e.g., `16:9`, `1:1`, `4:3`) |
 | `--size` | Size (e.g., `1024x1024`; `gpt-image-2` accepts valid custom sizes up to 3840px max edge) |
 | `--quality` | `normal` or `2k` (default: `2k`) |
-| `--imageSize` | `1K`, `2K`, or `4K` for Google/OpenRouter |
+| `--imageSize` | `1K`, `2K`, or `4K` for Google/OpenRouter/Evolink |
 | `--imageApiDialect` | `openai-native` or `ratio-metadata` for OpenAI-compatible gateways |
-| `--ref` | Reference images (Google, OpenAI, Azure OpenAI, OpenRouter, Replicate supported families, MiniMax, or Seedream 5.0/4.5/4.0) |
+| `--ref` | Reference images. Supported by Google, OpenAI, Azure OpenAI (PNG/JPG), OpenRouter, Replicate, MiniMax, Seedream 5.0/4.5/4.0, DashScope wan2.7-image family, and Evolink (public HTTP/HTTPS URLs). Not supported by Jimeng or Seedream 3.0 |
 | `--n` | Number of images per request (`replicate` currently requires `--n 1`) |
 | `--json` | JSON output |
 
@@ -731,6 +737,8 @@ AI SDK-based image generation using OpenAI GPT Image 2, Azure OpenAI, Google, Op
 | `REPLICATE_IMAGE_MODEL` | Replicate model | `google/nano-banana-2` |
 | `JIMENG_IMAGE_MODEL` | Jimeng model | `jimeng_t2i_v40` |
 | `SEEDREAM_IMAGE_MODEL` | Seedream model | `doubao-seedream-5-0-260128` |
+| `EVOLINK_API_KEY` | Evolink API key (https://evolink.ai/dashboard/keys) | - |
+| `EVOLINK_IMAGE_MODEL` | Evolink model | `gpt-image-2-beta` |
 | `OPENAI_BASE_URL` | Custom OpenAI endpoint | - |
 | `OPENAI_IMAGE_API_DIALECT` | OpenAI-compatible image API dialect (`openai-native` or `ratio-metadata`) | `openai-native` |
 | `OPENAI_IMAGE_USE_CHAT` | Use `/chat/completions` for OpenAI image generation | `false` |
@@ -753,6 +761,7 @@ AI SDK-based image generation using OpenAI GPT Image 2, Azure OpenAI, Google, Op
 | `WPDTC_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS` | Override provider request start gap | provider-specific |
 
 **Provider Notes**:
+- Evolink is **asynchronous**: the API returns a task ID, polls until completion, then downloads the result. Expect longer generation times vs. synchronous providers. Reference images must be public HTTP/HTTPS URLs.
 - Azure OpenAI: `--model` means Azure deployment name, not the underlying model family.
 - DashScope: `qwen-image-2.0-pro` is the recommended default for custom `--size`, `21:9`, and strong Chinese/English text rendering.
 - Z.AI: `glm-image` is recommended for posters, diagrams, and text-heavy Chinese/English images. Reference images are not supported.
@@ -768,7 +777,7 @@ AI SDK-based image generation using OpenAI GPT Image 2, Azure OpenAI, Google, Op
 1. If `--provider` is specified → use it
 2. If `--ref` is provided and no provider is specified → try Google, then OpenAI, Azure, OpenRouter, Replicate, Seedream, and finally MiniMax
 3. If only one API key is available → use that provider
-4. If multiple providers are available → default to Google, then OpenAI, Azure, OpenRouter, DashScope, Z.AI, MiniMax, Replicate, Jimeng, Seedream
+4. If multiple providers are available → default to Google, then OpenAI, Azure, OpenRouter, DashScope, Z.AI, MiniMax, Replicate, Jimeng, Seedream, Evolink
 
 #### wpdtc-danger-gemini-web
 

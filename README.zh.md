@@ -623,7 +623,7 @@ AI 驱动的生成后端。
 
 #### wpdtc-imagine
 
-基于 AI SDK 的图像生成，支持 OpenAI GPT Image 2、Azure OpenAI、Google、OpenRouter、DashScope（阿里通义万相）、MiniMax、即梦（Jimeng）、豆包（Seedream）和 Replicate API。支持文生图、参考图、宽高比、自定义尺寸、批量生成和质量预设。
+基于 AI SDK 的图像生成，支持 OpenAI GPT Image 2、Azure OpenAI、Google、OpenRouter、DashScope（阿里通义万相）、Z.AI GLM-Image、MiniMax、即梦（Jimeng）、豆包（Seedream）、Evolink（异步 GPT Image 2）和 Replicate API。支持文生图、参考图、宽高比、自定义尺寸、批量生成和质量预设。
 
 ```bash
 # 基础生成（自动检测服务商）
@@ -680,6 +680,12 @@ AI 驱动的生成后端。
 # 带参考图（Google、OpenAI、Azure OpenAI、OpenRouter、Replicate、MiniMax 或 Seedream 5.0/4.5/4.0）
 /wpdtc-imagine --prompt "把它变成蓝色" --image out.png --ref source.png
 
+# Evolink（异步 GPT Image 2）
+/wpdtc-imagine --prompt "一张电影海报" --image poster.png --provider evolink
+
+# Evolink + 参考图（公开 HTTP/HTTPS URL）
+/wpdtc-imagine --prompt "增强色彩" --image enhanced.png --provider evolink --ref https://example.com/photo.jpg
+
 # 批量模式
 /wpdtc-imagine --batchfile batch.json --jobs 4 --json
 ```
@@ -692,14 +698,14 @@ AI 驱动的生成后端。
 | `--image` | 输出图片路径（必需） |
 | `--batchfile` | 多图批量生成的 JSON 文件 |
 | `--jobs` | 批量模式的并发 worker 数 |
-| `--provider` | `google`、`openai`、`azure`、`openrouter`、`dashscope`、`zai`、`minimax`、`jimeng`、`seedream` 或 `replicate` |
+| `--provider` | `google`、`openai`、`azure`、`openrouter`、`dashscope`、`zai`、`minimax`、`jimeng`、`seedream`、`replicate` 或 `evolink` |
 | `--model`, `-m` | 模型 ID 或部署名。Azure 使用部署名；OpenRouter 使用完整模型 ID；Z.AI 使用 `glm-image`；MiniMax 使用 `image-01` / `image-01-live` |
 | `--ar` | 宽高比（如 `16:9`、`1:1`、`4:3`） |
 | `--size` | 尺寸（如 `1024x1024`；`gpt-image-2` 支持最长边不超过 3840px 的有效自定义尺寸） |
 | `--quality` | `normal` 或 `2k`（默认：`2k`） |
-| `--imageSize` | Google/OpenRouter 使用的 `1K`、`2K`、`4K` |
+| `--imageSize` | Google/OpenRouter/Evolink 使用的 `1K`、`2K`、`4K` |
 | `--imageApiDialect` | OpenAI 兼容网关的图像 API 方言（`openai-native` 或 `ratio-metadata`） |
-| `--ref` | 参考图片（Google、OpenAI、Azure OpenAI、OpenRouter、Replicate 支持的模型家族、MiniMax 或 Seedream 5.0/4.5/4.0） |
+| `--ref` | 参考图片。支持 Google、OpenAI、Azure OpenAI（仅 PNG/JPG）、OpenRouter、Replicate、MiniMax、Seedream 5.0/4.5/4.0、DashScope wan2.7-image 系列和 Evolink（公开 HTTP/HTTPS URL）。即梦和 Seedream 3.0 不支持 |
 | `--n` | 单次请求生成图片数量（`replicate` 当前只支持 `--n 1`） |
 | `--json` | 输出 JSON 结果 |
 
@@ -731,6 +737,8 @@ AI 驱动的生成后端。
 | `REPLICATE_IMAGE_MODEL` | Replicate 模型 | `google/nano-banana-2` |
 | `JIMENG_IMAGE_MODEL` | 即梦模型 | `jimeng_t2i_v40` |
 | `SEEDREAM_IMAGE_MODEL` | 豆包模型 | `doubao-seedream-5-0-260128` |
+| `EVOLINK_API_KEY` | Evolink API 密钥（https://evolink.ai/dashboard/keys） | - |
+| `EVOLINK_IMAGE_MODEL` | Evolink 模型 | `gpt-image-2-beta` |
 | `OPENAI_BASE_URL` | 自定义 OpenAI 端点 | - |
 | `OPENAI_IMAGE_API_DIALECT` | OpenAI 兼容图像 API 方言（`openai-native` 或 `ratio-metadata`） | `openai-native` |
 | `OPENAI_IMAGE_USE_CHAT` | OpenAI 改走 `/chat/completions` | `false` |
@@ -753,6 +761,7 @@ AI 驱动的生成后端。
 | `WPDTC_IMAGE_GEN_<PROVIDER>_START_INTERVAL_MS` | 覆盖 provider 请求启动间隔 | provider 默认值 |
 
 **Provider 说明**：
+- Evolink 是**异步**服务：API 返回任务 ID，持续轮询直到完成，然后下载结果。生成时间比同步服务商更长。参考图必须使用公开 HTTP/HTTPS 图片 URL。
 - Azure OpenAI：`--model` 表示 Azure deployment name，不是底层模型家族名。
 - DashScope：`qwen-image-2.0-pro` 是自定义 `--size`、`21:9` 和中英文排版的推荐默认模型。
 - Z.AI：`glm-image` 适合海报、图表和中英文排版密集的图片生成，暂不支持参考图。
@@ -768,7 +777,7 @@ AI 驱动的生成后端。
 1. 如果指定了 `--provider` → 使用指定的
 2. 如果传了 `--ref` 且未指定 provider → 依次尝试 Google、OpenAI、Azure、OpenRouter、Replicate、Seedream，最后是 MiniMax
 3. 如果只有一个 API 密钥 → 使用对应服务商
-4. 如果多个可用 → 默认使用 Google，然后依次为 OpenAI、Azure、OpenRouter、DashScope、Z.AI、MiniMax、Replicate、即梦、豆包
+4. 如果多个可用 → 默认使用 Google，然后依次为 OpenAI、Azure、OpenRouter、DashScope、Z.AI、MiniMax、Replicate、即梦、豆包、Evolink
 
 #### wpdtc-danger-gemini-web
 
