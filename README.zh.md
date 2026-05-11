@@ -472,21 +472,6 @@ clawhub install wpdtc-markdown-to-html
 | ![editorial](./screenshots/article-illustrator-styles/editorial.webp) | ![scientific](./screenshots/article-illustrator-styles/scientific.webp) | |
 | editorial | scientific | |
 
-#### wpdtc-post-to-wordpress
-
-通过 REST API 发布内容到 WordPress 站点，支持完整的 Gutenberg 块编辑器。将 Markdown 转换为 Gutenberg 块，上传媒体文件，管理分类/标签，支持草稿/发布工作流。
-
-```bash
-# 发布 Markdown 文章为草稿
-/wpdtc-post-to-wordpress "我的文章" --markdown article.md
-
-# 直接发布并设置分类和标签
-/wpdtc-post-to-wordpress "我的文章" --markdown article.md --status publish --categories tech,ai --tags tutorial
-
-# 带特色图片
-/wpdtc-post-to-wordpress "我的文章" --markdown article.md --featured-image cover.jpg
-```
-
 #### wpdtc-post-to-x
 
 发布内容和文章到 X (Twitter)。支持带图片的普通帖子和 X 文章（长篇 Markdown）。使用真实 Chrome + CDP 绕过反自动化检测。

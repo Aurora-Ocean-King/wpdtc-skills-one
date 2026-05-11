@@ -472,21 +472,6 @@ Smart article illustration skill with Type × Style × Palette three-dimension a
 | ![editorial](./screenshots/article-illustrator-styles/editorial.webp) | ![scientific](./screenshots/article-illustrator-styles/scientific.webp) | |
 | editorial | scientific | |
 
-#### wpdtc-post-to-wordpress
-
-Post content to WordPress sites via REST API with full Gutenberg block support. Converts Markdown to Gutenberg blocks, uploads media, manages categories/tags, and supports draft/publish workflows.
-
-```bash
-# Post markdown as draft
-/wpdtc-post-to-wordpress "My Article" --markdown article.md
-
-# Publish with categories and tags
-/wpdtc-post-to-wordpress "My Article" --markdown article.md --status publish --categories tech,ai --tags tutorial
-
-# With featured image
-/wpdtc-post-to-wordpress "My Article" --markdown article.md --featured-image cover.jpg
-```
-
 #### wpdtc-post-to-x
 
 Post content and articles to X (Twitter). Supports regular posts with images and X Articles (long-form Markdown). Uses real Chrome with CDP to bypass anti-automation.
