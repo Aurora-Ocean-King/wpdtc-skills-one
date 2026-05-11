@@ -72,7 +72,7 @@ Checks: Chrome, profile isolation, Bun, Accessibility, clipboard, paste keystrok
 | Check | Fix |
 |-------|-----|
 | Chrome | Install Chrome or set `X_BROWSER_CHROME_PATH` env var |
-| Profile dir | Shared profile at `wpdtc-skills/chrome-profile` (see CLAUDE.md Chrome Profile section) |
+| Profile dir | Shared profile at `wpdtc-skills/chrome-profile` (see [Chrome Profile Setup](https://github.com/Aurora-Ocean-King/wpdtc-skills-one/blob/main/docs/chrome-profile.md)) |
 | Bun runtime | `brew install oven-sh/bun/bun` (macOS) or `npm install -g bun` |
 | Accessibility (macOS) | System Settings → Privacy & Security → Accessibility → enable terminal app |
 | Clipboard copy | Ensure Swift/AppKit available (macOS Xcode CLI tools: `xcode-select --install`) |
