@@ -1,0 +1,8 @@
+{
+  "name": "wpdtc-danger-x-to-markdown-scripts",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "wpdtc-chrome-cdp": "^0.1.0"
+  }
+}

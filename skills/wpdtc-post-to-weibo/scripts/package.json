@@ -1,0 +1,9 @@
+{
+  "name": "wpdtc-post-to-weibo-scripts",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "wpdtc-chrome-cdp": "^0.1.0",
+    "wpdtc-md": "^0.1.0"
+  }
+}

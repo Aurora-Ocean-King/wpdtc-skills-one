@@ -1,0 +1,39 @@
+{
+  "name": "wpdtc-skills-one",
+  "owner": {
+    "name": "Aurora-Ocean-King",
+    "email": "aurora.ocean.king@gmail.com"
+  },
+  "metadata": {
+    "description": "WPDTC skills collection for AI-powered content generation, publishing, and utility workflows",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "wpdtc-skills-one",
+      "description": "AI-powered content generation, publishing, and utility tools for daily work efficiency",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/wpdtc-article-illustrator",
+        "./skills/wpdtc-comic",
+        "./skills/wpdtc-compress-image",
+        "./skills/wpdtc-cover-image",
+        "./skills/wpdtc-danger-gemini-web",
+        "./skills/wpdtc-danger-x-to-markdown",
+        "./skills/wpdtc-format-markdown",
+        "./skills/wpdtc-imagine",
+        "./skills/wpdtc-infographic",
+        "./skills/wpdtc-markdown-to-html",
+        "./skills/wpdtc-post-to-wechat",
+        "./skills/wpdtc-post-to-weibo",
+        "./skills/wpdtc-post-to-wordpress",
+        "./skills/wpdtc-post-to-x",
+        "./skills/wpdtc-slide-deck",
+        "./skills/wpdtc-translate",
+        "./skills/wpdtc-url-to-markdown",
+        "./skills/wpdtc-youtube-transcript"
+      ]
+    }
+  ]
+}

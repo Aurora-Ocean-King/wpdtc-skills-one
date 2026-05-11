@@ -1,0 +1,11 @@
+{
+  "name": "wpdtc-post-to-wechat-scripts",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@jsquash/webp": "^1.5.0",
+    "wpdtc-chrome-cdp": "^0.1.0",
+    "wpdtc-md": "^0.1.0",
+    "jimp": "^1.6.0"
+  }
+}

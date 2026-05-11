@@ -1,0 +1,15 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "wpdtc-danger-gemini-web-scripts",
+      "dependencies": {
+        "wpdtc-chrome-cdp": "^0.1.0",
+      },
+    },
+  },
+  "packages": {
+    "wpdtc-chrome-cdp": ["wpdtc-chrome-cdp@0.1.0", "", {}, "sha512-Hk1yolVrlIlzMCKXjc21yAJP0dttun+SaPRcW7HL9/mmwZ9kedQ6fFgxf8M91I+/Fe348sPbdYVhSAmYHzVunQ=="],
+  }
+}
